@@ -34,4 +34,11 @@ public class Equipment {
     public String getBorrowerLastName() { return borrowerLastName; }
     public LocalDate getBorrowedAt() { return borrowedAt; }
     public LocalDate getLastReturnedAt() { return lastReturnedAt; }
+
+    public void borrow(String borrowerFirstName, String borrowerLastName, LocalDate borrowedAt) {
+        this.borrowerFirstName = borrowerFirstName;
+        this.borrowerLastName = borrowerLastName;
+        this.borrowedAt = borrowedAt;
+        this.available = false;
+    }
 }
