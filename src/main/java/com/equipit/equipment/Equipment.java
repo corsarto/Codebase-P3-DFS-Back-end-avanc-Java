@@ -41,4 +41,12 @@ public class Equipment {
         this.borrowedAt = borrowedAt;
         this.available = false;
     }
+
+    public void returnedBorrow(LocalDate lastReturnedAt) {
+        this.borrowerFirstName = null;
+        this.borrowerLastName = null;
+        this.borrowedAt = null;
+        this.lastReturnedAt = lastReturnedAt;
+        this.available = true;
+    }
 }
