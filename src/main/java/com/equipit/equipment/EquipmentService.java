@@ -40,6 +40,12 @@ public class EquipmentService {
     }
 
     public Equipment returnEquipment(Long id) {
-        throw new UnsupportedOperationException("Exercise 1: implement equipment return");
+        Optional<Equipment> equipment = repository.findById(id);
+        if(equipment.isEmpty()) {
+            throw new EquipmentNotFoundException("The equipment is not present");
+        } 
+        Equipment equipmentReturned = equipment.get();
+        equipmentReturned.returnedBorrow(LocalDate.now());
+        return repository.save(equipmentReturned);
     }
 }
