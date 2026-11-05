@@ -69,4 +69,13 @@ class EquipmentServiceTest {
         assertThatThrownBy(() -> service.returnEquipment(99L))
             .isInstanceOf(EquipmentNotFoundException.class);
     }
+
+    @Test 
+    void rejectsAvailableEquipment() {
+        Equipment equipment = new Equipment("Laptop", "Computer");
+        when(repository.findById(1L)).thenReturn(Optional.of(equipment));
+
+        assertThatThrownBy(() -> service.returnEquipment(1L))
+            .isInstanceOf(EquipmentAvailableException.class);
+    }
 }
