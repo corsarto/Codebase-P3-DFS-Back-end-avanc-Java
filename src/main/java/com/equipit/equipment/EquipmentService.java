@@ -1,6 +1,9 @@
 package com.equipit.equipment;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +19,14 @@ public class EquipmentService {
     }
 
     public Equipment borrowEquipment(Long id, String firstName, String lastName) {
-        throw new UnsupportedOperationException("Exercise 1: implement equipment borrowing");
+        Optional<Equipment> equipment = repository.findById(id);
+        if(!equipment.isPresent()) {
+            throw new EquipmentNotFoundException("No equipment present.");
+        } else {
+            Equipment equipmentBorrow = equipment.get();
+            equipmentBorrow.borrow(firstName, lastName, LocalDate.now());
+            return repository.save(equipmentBorrow);
+        }
     }
 
     public Equipment returnEquipment(Long id) {
