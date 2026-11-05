@@ -21,12 +21,22 @@ public class EquipmentService {
     public Equipment borrowEquipment(Long id, String firstName, String lastName) {
         Optional<Equipment> equipment = repository.findById(id);
         if(!equipment.isPresent()) {
+
             throw new EquipmentNotFoundException("No equipment present.");
+
         } else {
+
             Equipment equipmentBorrow = equipment.get();
+            if(!equipmentBorrow.isAvailable()) {
+
+                throw new EquipmentUnavailableException("The equipment is no longer available.");
+
+            }
             equipmentBorrow.borrow(firstName, lastName, LocalDate.now());
+
             return repository.save(equipmentBorrow);
         }
+            
     }
 
     public Equipment returnEquipment(Long id) {
