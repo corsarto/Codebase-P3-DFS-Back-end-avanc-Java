@@ -19,43 +19,28 @@ public class EquipmentService {
     }
 
     public Equipment borrowEquipment(Long id, String firstName, String lastName) {
-        Optional<Equipment> equipment = repository.findById(id);
-        if(!equipment.isPresent()) {
-
-            throw new EquipmentNotFoundException("No equipment present.");
-
-        } else {
-
-            Equipment equipmentBorrow = equipment.get();
-            if(!equipmentBorrow.isAvailable()) {
-
-                throw new EquipmentUnavailableException("The equipment is no longer available.");
-
-            }
-            equipmentBorrow.borrow(firstName, lastName, LocalDate.now());
-
-            return repository.save(equipmentBorrow);
+        Equipment equipmentBorrow = findEquipmentOrThrow(id);
+        if(!equipmentBorrow.isAvailable()) {
+            throw new EquipmentUnavailableException("The equipment is no longer available.");
         }
-            
+        equipmentBorrow.borrow(firstName, lastName, LocalDate.now());
+        return repository.save(equipmentBorrow);            
     }
 
     public Equipment returnEquipment(Long id) {
-        Optional<Equipment> equipment = repository.findById(id);
-        if(equipment.isEmpty()) {
-
-            throw new EquipmentNotFoundException("The equipment is not present");
-
-        } 
-
-        Equipment equipmentReturned = equipment.get();
-
+        Equipment equipmentReturned = findEquipmentOrThrow(id);
         if(equipmentReturned.isAvailable()) {
-
             throw new EquipmentAvailableException("The equipment is already available.");
-
         }
-
         equipmentReturned.returnedBorrow(LocalDate.now());
         return repository.save(equipmentReturned);
+    }
+
+    private Equipment findEquipmentOrThrow(Long id) {
+        Optional<Equipment> equipment = repository.findById(id);
+        if(equipment.isEmpty()) {
+            throw new EquipmentNotFoundException("The equipment is not present");
+        } 
+        return equipment.get();
     }
 }
