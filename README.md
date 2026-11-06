@@ -33,3 +33,11 @@ npm run dev
 ## Structure
 
 The backend is organized around the equipment domain: entity and repository, service layer, DTO, and REST controller. The React client is kept separate and communicates with the API over HTTP.
+
+## Features 
+
+**Borrowing an item**: records the borrower's first and last name along with the current date, and marks the item as unavailable.
+Rejected if the item does not exist (`EquipmentNotFoundException`) or if it is already on loan (`EquipmentUnavailableException`).
+
+**Returning an item**: records the return date, clears the borrower and the loan date, and makes the item available again.
+Denied if the item does not exist (`EquipmentNotFoundException`) or if it is already available (`EquipmentAvailableException`).
