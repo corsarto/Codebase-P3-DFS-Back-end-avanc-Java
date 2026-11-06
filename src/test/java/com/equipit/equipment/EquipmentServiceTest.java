@@ -13,6 +13,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.equipit.equipment.exception.EquipmentAvailableException;
+import com.equipit.equipment.exception.EquipmentNotFoundException;
+import com.equipit.equipment.exception.EquipmentUnavailableException;
+import com.equipit.equipment.model.Equipment;
+import com.equipit.equipment.repository.EquipmentRepository;
+import com.equipit.equipment.service.EquipmentService;
+
 @ExtendWith(MockitoExtension.class)
 class EquipmentServiceTest {
     @Mock

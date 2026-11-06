@@ -1,10 +1,16 @@
-package com.equipit.equipment;
+package com.equipit.equipment.service;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+
+import com.equipit.equipment.exception.EquipmentAvailableException;
+import com.equipit.equipment.exception.EquipmentNotFoundException;
+import com.equipit.equipment.exception.EquipmentUnavailableException;
+import com.equipit.equipment.model.Equipment;
+import com.equipit.equipment.repository.EquipmentRepository;
 
 @Service
 public class EquipmentService {

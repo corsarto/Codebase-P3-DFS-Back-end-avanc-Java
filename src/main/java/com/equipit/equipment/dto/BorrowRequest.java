@@ -1,4 +1,4 @@
-package com.equipit.equipment;
+package com.equipit.equipment.dto;
 
 import jakarta.validation.constraints.NotBlank;
 

@@ -1,4 +1,4 @@
-package com.equipit.equipment;
+package com.equipit.equipment.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

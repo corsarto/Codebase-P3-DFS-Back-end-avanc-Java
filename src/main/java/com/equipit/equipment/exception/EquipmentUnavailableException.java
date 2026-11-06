@@ -1,4 +1,4 @@
-package com.equipit.equipment;
+package com.equipit.equipment.exception;
 
 public class EquipmentUnavailableException extends RuntimeException {
 

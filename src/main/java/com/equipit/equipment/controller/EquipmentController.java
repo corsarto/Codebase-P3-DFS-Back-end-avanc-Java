@@ -1,4 +1,4 @@
-package com.equipit.equipment;
+package com.equipit.equipment.controller;
 
 import jakarta.validation.Valid;
 import java.util.List;
@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.equipit.equipment.dto.BorrowRequest;
+import com.equipit.equipment.model.Equipment;
+import com.equipit.equipment.service.EquipmentService;
 
 @RestController
 @RequestMapping("/api/equipment")
