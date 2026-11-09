@@ -1,8 +1,17 @@
-import { FormEvent, StrictMode, useEffect, useState } from 'react';
+import {SubmitEvent, StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
 
-type Equipment = { id: number; name: string; category: string; available: boolean; borrowerFirstName?: string };
+type Equipment = { 
+  id: number; 
+  name: string; 
+  category: string; 
+  available: boolean; 
+  borrowerFirstName?: string;
+  borrowerLastName?: string;
+  borrowedAt?: string;
+  lastReturnedAt?: string 
+};
 
 function App() {
   const [equipment, setEquipment] = useState<Equipment[]>([]);
@@ -13,7 +22,7 @@ function App() {
   const loadEquipment = () => fetch('/api/equipment').then(response => response.json()).then(setEquipment);
   useEffect(() => { void loadEquipment(); }, []);
 
-  const borrow = async (event: FormEvent) => {
+  const borrow = async (event: SubmitEvent) => {
     event.preventDefault();
     if (selectedId === null) return;
     await fetch(`/api/equipment/${selectedId}/borrow`, {
@@ -28,13 +37,59 @@ function App() {
     await loadEquipment();
   };
 
-  return <main><header><p className="eyebrow">Internal equipment desk</p><h1>EquipIT</h1></header>
-    <section className="equipment-list">{equipment.map(item => <article key={item.id}>
-      <div><h2>{item.name}</h2><p>{item.category}</p></div><div className="actions">
-        <span className={item.available ? 'available' : 'borrowed'}>{item.available ? 'Available' : `Borrowed by ${item.borrowerFirstName ?? 'a colleague'}`}</span>
-        {item.available ? <button onClick={() => setSelectedId(item.id)}>Borrow</button> : <button onClick={() => void returnEquipment(item.id)}>Return</button>}
-      </div></article>)}</section>
-    {selectedId !== null && <form onSubmit={borrow}><h2>Borrow equipment</h2><input required placeholder="First name" value={firstName} onChange={event => setFirstName(event.target.value)} /><input required placeholder="Last name" value={lastName} onChange={event => setLastName(event.target.value)} /><button type="submit">Confirm</button></form>}
+  return <main>
+          <header>
+            <p className="eyebrow">Internal equipment desk</p>
+            <h1>EquipIT</h1>
+          </header>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Borrower</th>
+                <th>Borrowed at</th>
+                <th>Last returned at</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {equipment.map(item =>
+                <tr key={item.id}> 
+                  <td>{item.name}</td>
+                  <td>{item.category}</td>
+                  <td className={item.available ? 'available' : 'borrowed'}>
+                    {item.available ? 'Available' : 'Borrowed'}
+                  </td>
+                  <td>{item.available ? '' : `${item.borrowerFirstName} ${item.borrowerLastName}`}</td>
+                  <td>{item.borrowedAt}</td>
+                  <td>{item.lastReturnedAt}</td>
+                  <td>
+                    {item.available ? 
+                      <button onClick={() => setSelectedId(item.id)}>Borrow</button> 
+                      : 
+                      <button onClick={() => void returnEquipment(item.id)}>Return</button>}
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+          {selectedId !== null && 
+            <form onSubmit={borrow}>
+              <h2>Borrow equipment</h2>
+              <input 
+                required placeholder="First name" 
+                value={firstName} 
+                onChange={event => setFirstName(event.target.value)} 
+              />
+              <input 
+                required placeholder="Last name" 
+                value={lastName} 
+                onChange={event => setLastName(event.target.value)} 
+              />
+              <button type="submit">Confirm</button>
+            </form>}
   </main>;
 }
 
