@@ -26,9 +26,16 @@ npm run dev
 
 ## API
 
-- `GET /api/equipment`
-- `PUT /api/equipment/{id}/borrow`
-- `PUT /api/equipment/{id}/return`
+- `GET /api/equipment` List all equipment (200)
+- `PUT /api/equipment/{id}/borrow` Borrow a piece of equipment (204, 400, 404)
+  Request body: `{ "firstName": "John", "lastName": "Doe" }` (both required).
+- `PUT /api/equipment/{id}/return` Return a piece of equipment (204, 400, 404)
+
+Response codes:
+
+- **204**: success, no response body.
+- **400**: equipment not available (borrow), already available (return), or missing first name / last name.
+- **404**: no equipment found with this id.
 
 ## Structure
 
