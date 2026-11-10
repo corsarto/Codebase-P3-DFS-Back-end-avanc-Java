@@ -39,7 +39,19 @@ Response codes:
 
 ## Structure
 
-The backend is organized around the equipment domain: entity and repository, service layer, DTO, and REST controller. The React client is kept separate and communicates with the API over HTTP.
+The backend follows the Spring layered architecture: controller → service → repository.
+
+```
+com.equipit.equipment
+├── controller   REST endpoints and HTTP error handling
+├── service      business rules (borrow, return)
+├── repository   database access (Spring Data JPA)
+├── model        Equipment entity
+├── dto          request body (BorrowRequest)
+└── exception    business exceptions
+```
+
+Each package has one responsibility. `GlobalExceptionHandler` is in `controller` because turning exceptions into HTTP codes is an HTTP concern.
 
 ## Features 
 
