@@ -1,4 +1,4 @@
-package com.equipit.equipment;
+package com.equipit.equipment.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -18,7 +18,6 @@ import com.equipit.equipment.exception.EquipmentNotFoundException;
 import com.equipit.equipment.exception.EquipmentUnavailableException;
 import com.equipit.equipment.model.Equipment;
 import com.equipit.equipment.repository.EquipmentRepository;
-import com.equipit.equipment.service.EquipmentService;
 
 @ExtendWith(MockitoExtension.class)
 class EquipmentServiceTest {
